@@ -403,24 +403,32 @@
 %% ---( draft customizations )---
 %% 
 
-%% Disable / remove copyright boxes
-\setcopyright{none}
-\settopmatter{printacmref=false,printfolios}
-\renewcommand\footnotetextcopyrightpermission[1]{}
-\acmConference{\ifcase \month \or January\or February\or March\or %
-  April\or May \or June\or July\or August\or September\or October\or November\or %
-  December\fi}{\number \year{}}{\thauthoraff}
-\acmYear{2021}
-\acmPrice{}
-\acmDOI{}
-\acmISBN{}
+\settopmatter{printfolios=true,printccs=false,printacmref=false}
 
+% \acmConference[CoNEXT '23]{18th International Conference on emerging Networking
+%   EXperiments}{December 5-8,2022}{Paris, France}
+% \acmYear{2023}
+% \setcopyright{rightsretained}
+%% Disable / remove copyright boxes
+% \renewcommand\footnotetextcopyrightpermission[1]{}
+% \copyrightyear{2023}
+% \acmBooktitle{18th International Conference on emerging Networking
+%   EXperiments (CoNEXT 2023), December 5-8, 2022, Paris, France}
+% \acmDOI{}
+% \acmISBN{}
 
 %% Graphics Path to find your figures and illustrations.
-\graphicspath{{./figs/}}
+\graphicspath{{./figures/}}
 
-%% 
-%% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% % Page geometry and numbering.
+% \setlength\paperheight {11in}
+% \setlength\paperwidth {8.5in}
+% \setlength{\textwidth}{7in}
+% \setlength{\textheight}{9.25in}
+% \setlength{\oddsidemargin}{-.25in}
+% \setlength{\evensidemargin}{-.25in}
+% %
+% \pagenumbering{arabic}
 
 
 %% ---( workarounds )---

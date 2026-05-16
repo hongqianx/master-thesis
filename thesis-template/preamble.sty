@@ -216,6 +216,13 @@
 \newcommand{\tshead}[1]{\textit{\footnotesize #1}}
 % \setlength{\tabcolsep}{4pt}
 
+%% Symbols for descriptive tables.
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand{\symok}[0]{{\color[HTML]{4DAF4A}{\cmark}}\xspace}
+\newcommand{\symfail}[0]{{\color[HTML]{A41A1C}{\xmark}}\xspace}
+\newcommand{\semichecked}{\cmark\!\!\!\raisebox{0.4 em}{\tiny\textbf{$\smallsetminus$}}}
+
 %% Formatting large numbers?
 %% Simply use `\num{123456789}'. Note the **absence of comma**.
 %%

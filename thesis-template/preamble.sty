@@ -453,6 +453,33 @@
 % % Workaround for 8pt references font issue
 % \renewcommand*{\bibfont}{\smaller}
 
+%% Suppress empty bibliography warnings.
+\makeatletter
+\def\blx@warn@bibempty{}
+\makeatother
+
+%% Do not complain about missing `city' and `country' information for author
+%% affiliations.
+%% (https://tex.stackexchange.com/questions/655620/how-to-make-acmart-stop-complaining-about-missing-country-in-affiliation)
+\makeatletter
+\def\@ACM@checkaffil{% Only warnings
+    \if@ACM@instpresent\else
+    \ClassWarningNoLine{\@classname}{No institution present for an affiliation}%
+    \fi
+    \if@ACM@citypresent\else
+    \ClassWarningNoLine{\@classname}{No city present for an affiliation}%
+    \fi
+    \if@ACM@countrypresent\else
+        \ClassWarningNoLine{\@classname}{No country present for an affiliation}%
+    \fi
+}
+%% Shrink author name font size to avoid author names from wrapping around.
+%% (https://tex.stackexchange.com/questions/558381/how-to-change-spacing-in-the-acm-conference-template)
+\def\@authorfont{\normalfont\Large} %change font. don't do this.
+\def\@affiliationfont{\normalfont\small} %change font. don't do this.
+% \def\author@bx@sep{1pc}
+\makeatother
+
 %%
 %% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

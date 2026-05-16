@@ -38,25 +38,110 @@
 }
 
 
-\usepackage{array}
+%% Excellent package for managing acronyms.
+%% Use \ac{...} for singular, and \acp{...} for plural.
+%%
+%% \DeclareAcronym{cdn}{short=CDN,
+%%    long=content delivery network}
+%% Then using \ac{cdn} will expand to
+%% “content delivery network (CDN)” on first use, and
+%% simply to “CDN” afterwards.
+%% Using \acp{cdn} will expand to
+%% “content delivery networks (CDNs)” on first use, and
+%% simply to “CDNs” afterwards.
+%%
+\usepackage{acro}
+%
+\usepackage{algorithm}
+%
+\usepackage[noend]{algpseudocode}
+%
+\iftoggle{DCacmart}{% (acmart template already includes it)
+  }{\usepackage{array}}
+% %
+% %% For using nice dashed lines as “row separators”
+% %% Example: Use \hdashline instead of \midrule
+% \usepackage{arydshln}
+%
+%% The `babel' package allows the use of characters from a range of languages
+%% and also translates some elements within the document.
 \usepackage[english]{babel}
-\usepackage{booktabs}
-\usepackage{caption}
+% %
+% %% Replace scaled font for `texttt'
+% \usepackage[scaled=0.85]{beramono}
+%
+\iftoggle{DCacmart}{% (acmart template already includes it)
+  }{\usepackage{booktabs}}
+% %
+% \usepackage{bytefield}
+%
+%% Allows customizing the rule colors in tables via `\arrayrulecolor'.
+\usepackage{colortbl}
+%
+%
+\usepackage{enumerate}
+%
+%% `\labelindent' already exists in the IEEE template, and since `enumitem'
+%% package defines it again, the document will not compile.
+%% To get rid of the error(s), uncomment the following line.
+%
+% \let\labelindent\relax
+%
 \usepackage{enumitem}
+%
 \usepackage{float}
-\usepackage{graphicx}
+%
 \usepackage{ifthen}
+%
 \usepackage[utf8]{inputenc}
+%
+\usepackage{layouts}
+% %
+% \usepackage[framemethod=TikZ]{mdframed}
+%
 \usepackage{lipsum}
+%
 \usepackage{multirow}
-\usepackage[group-separator={,},per-mode=symbol,binary-units=true]{siunitx}
+%
+%% The package typesets fractions “nicely” — in the form ‘a/b’ (i.e., staggered
+%% with a slash between them, rather than directly one over the other).
+%% Note that this package is distributed as part of a bundle including the
+%% `units' package.
+\usepackage{nicefrac}
+%
+\usepackage{pifont}
+%
+%% For formatting numbers with SI units properly.
+%%
+%% For instance, define the following.
+%%   \newcommand{\ums}[1]{\SI{#1}{\milli\second}}
+%%   \newcommand{\uus}[1]{\SI{#1}{\micro\second}}
+%% Then in the text using \ums{1} and \uus{100} will
+%% automatically render them as `1 ms` and `1 µs`, respectively
+%%
+\usepackage[group-separator={,}]{siunitx}
+%
+%% Provides `highlight' macro (\hl{...})
+%%
+\usepackage{soul}
+%
 \usepackage{subcaption}
-\usepackage{tabularx}
-\usepackage{booktabs}
+%
+\iftoggle{DCacmart}{% (acmart template already includes it)
+  }{\usepackage{tabularx}}
+%
 \usepackage{textcomp}
-\usepackage{xcolor}
-\usepackage{xspace}
+%
+\usepackage{threeparttable}
+% %
+% \usepackage{titlesec}
+%
 \usepackage[normalem]{ulem}
+%
+\usepackage{wrapfig}
+%
+\usepackage{xspace}
+
 
 \usepackage{hyperref}
 

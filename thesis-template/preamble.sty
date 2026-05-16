@@ -270,6 +270,27 @@
 \setlength{\twoInOneColgrid}{0.23\textwidth}
 
 
+%% ---( Autoref labels )---
+%%
+%% When use you \autoref{...} it automatically generates
+%% a nice citation depending on what is being cited.
+%% Example: \autoref{fig:xyz} would, by default, generate “Figure 1”,
+%% with that entire text stylized as a link.
+%% If you want that autoref label to be changed, you can modify it below.
+%% Using this package ensures that even if multiple people edit the document,
+%% we end up with a consistent manner of referencing citations.
+\newcommand{\configautoref}{%
+    %% The `\@gobble` part removes the spacing
+    %% between the autoref label and number.
+    \makeatletter
+    \renewcommand*{\figureautorefname}{Fig.\,\@gobble}
+    \renewcommand*{\tableautorefname}{Tab.\,\@gobble}
+    \renewcommand*{\sectionautorefname}{\S\,\@gobble}
+    \renewcommand*{\subsectionautorefname}{\S\,\@gobble}
+    \makeatother
+}
+
+
 %%
 %% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -1,0 +1,549 @@
+%% Based on https://gist.github.com/balakrishnanc/ec15f2775ec4050e44219a2337243e88
+\ProvidesPackage{preamble}
+
+
+\usepackage{etoolbox}
+
+
+\newtoggle{DCacmart}
+\IfClassLoadedTF{acmart}{\toggletrue{DCacmart}}{\togglefalse{DCacmart}}
+
+\newtoggle{DCieee}
+\IfClassLoadedTF{IEEEtran}{\toggletrue{DCieee}}{\togglefalse{DCieee}}
+\IfClassLoadedTF{IEEEoj}{\toggletrue{DCieee}}{}
+
+\newtoggle{DCllncs}
+\IfClassLoadedTF{llncs}{\toggletrue{DCllncs}}{\togglefalse{DCllncs}}
+
+
+%% Do NOT include some packages when using `acmart` template,
+%% since they will be loaded by the class file.
+\iftoggle{DCacmart}{% (acmart template)
+  \typeout{Please verify that each package you use is included in the list of
+    ``accepted'' packages by the ACM publishing system (TAPS):
+    https://authors.acm.org/proceedings/production-information/accepted-latex-packages}%
+}{% (not acmart template)
+  \usepackage{amsfonts}
+  \usepackage{amsmath}
+  \usepackage{amssymb}
+  \usepackage{array}
+  \usepackage{balance}
+  \usepackage{caption}
+  \usepackage{graphicx}
+  \usepackage{tabularx}
+  \usepackage{xcolor}
+}
+
+\iftoggle{DCieee}{%(ieee* template)
+}{% (not ieee* template)
+}
+
+
+%% Excellent package for managing acronyms.
+%% Use \ac{...} for singular, and \acp{...} for plural.
+%%
+%% \DeclareAcronym{cdn}{short=CDN,
+%%    long=content delivery network}
+%% Then using \ac{cdn} will expand to
+%% “content delivery network (CDN)” on first use, and
+%% simply to “CDN” afterwards.
+%% Using \acp{cdn} will expand to
+%% “content delivery networks (CDNs)” on first use, and
+%% simply to “CDNs” afterwards.
+%%
+\usepackage{acro}
+%
+\usepackage{algorithm}
+%
+\usepackage[noend]{algpseudocode}
+%
+\iftoggle{DCacmart}{% (acmart template already includes it)
+  }{\usepackage{array}}
+% %
+% %% For using nice dashed lines as “row separators”
+% %% Example: Use \hdashline instead of \midrule
+% \usepackage{arydshln}
+%
+%% The `babel' package allows the use of characters from a range of languages
+%% and also translates some elements within the document.
+\usepackage[english]{babel}
+% %
+% %% Replace scaled font for `texttt'
+% \usepackage[scaled=0.85]{beramono}
+%
+\iftoggle{DCacmart}{% (acmart template already includes it)
+  }{\usepackage{booktabs}}
+% %
+% \usepackage{bytefield}
+%
+%% Allows customizing the rule colors in tables via `\arrayrulecolor'.
+\usepackage{colortbl}
+%
+%
+\usepackage{enumerate}
+%
+%% `\labelindent' already exists in the IEEE template, and since `enumitem'
+%% package defines it again, the document will not compile.
+%% To get rid of the error(s), uncomment the following line.
+%
+% \let\labelindent\relax
+%
+\usepackage{enumitem}
+%
+\usepackage{float}
+%
+\usepackage{ifthen}
+%
+\usepackage[utf8]{inputenc}
+%
+\usepackage{layouts}
+% %
+% \usepackage[framemethod=TikZ]{mdframed}
+%
+\usepackage{lipsum}
+%
+\usepackage{multirow}
+%
+%% The package typesets fractions “nicely” — in the form ‘a/b’ (i.e., staggered
+%% with a slash between them, rather than directly one over the other).
+%% Note that this package is distributed as part of a bundle including the
+%% `units' package.
+\usepackage{nicefrac}
+%
+\usepackage{pifont}
+%
+%% For formatting numbers with SI units properly.
+%%
+%% For instance, define the following.
+%%   \newcommand{\ums}[1]{\SI{#1}{\milli\second}}
+%%   \newcommand{\uus}[1]{\SI{#1}{\micro\second}}
+%% Then in the text using \ums{1} and \uus{100} will
+%% automatically render them as `1 ms` and `1 µs`, respectively
+%%
+\usepackage[group-separator={,}]{siunitx}
+%
+%% Provides `highlight' macro (\hl{...})
+%%
+\usepackage{soul}
+%
+\usepackage{subcaption}
+%
+\iftoggle{DCacmart}{% (acmart template already includes it)
+  }{\usepackage{tabularx}}
+%
+%% The package helps in typesetting beautiful in-line colorful text boxes.
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+%
+\usepackage{textcomp}
+%
+\usepackage{threeparttable}
+% %
+% \usepackage{titlesec}
+%
+\usepackage[normalem]{ulem}
+%
+\usepackage{wrapfig}
+%
+\usepackage{xspace}
+
+
+\usepackage{hyperref}
+
+
+\hypersetup{pdfstartview=FitH,
+  pdfpagelayout=SinglePage,
+  bookmarksnumbered=true,
+  bookmarksopen=true,
+  colorlinks=true,
+  citecolor=blue,
+  linkcolor= blue,
+  urlcolor=blue}
+
+% If you use the hyperref package, please uncomment the following line to display
+% URLs in blue roman font according to Springer's eBook style.
+\renewcommand\UrlFont{\color{blue}\rmfamily}
+
+% To make it easier to break overflowing URLs.
+\def\UrlBreaks{\do\.\do-\do\/\do\_}
+
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+
+%% ---( general text formatting )---
+%%
+
+%% Use the `\term' or `\newterm' macro to define a term on first use. Makes it
+%% easy to check if the term has been ``introduced'' multiple times.
+\newcommand{\term}[1]{\emph{#1}}
+\newcommand{\newterm}[1]{\emph{#1}}
+%% For text or terms that require some emphasis.
+\newcommand{\stress}[1]{\textit{#1}}
+
+\newcommand{\mt}[1]{\ensuremath{\mbox{\textit{#1}}}}
+\newcommand{\tsup}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\tsub}[1]{\ensuremath{_{\textrm{#1}}}}
+
+%% Circled numbers in text.
+\newcommand{\numcirc}[1]{\textcircled{\scriptsize{\textbf{#1}}}}
+
+%% Commands to start a paragraph with an ``inline heading''.
+\newcommand{\parahd}[1]{\medskip{} \noindent \textbf{#1}}
+\newcommand{\parab}[1]{\vspace{0.02in}\noindent{\textbf{#1}}\quad}
+\newcommand{\parai}[1]{\vspace{0.02in}\noindent{\textit{#1}}\quad}
+\newcommand{\paraib}[1]{\vspace{0.06in}\noindent{\textit{\textbf{#1}}}\quad}
+
+%% Highlight text through colorful boxes.
+%%
+%% Hat-tip:
+%% https://github.com/THS119/LaTeXAestheticTemplate/blob/main/preamble.tex
+%%
+\definecolor{dblue}{RGB}{0,110,185}
+\definecolor{sblue}{RGB}{240,243,250}
+\NewTotalTColorBox[]{\BlkInfo}{+m +m}{
+  notitle,
+  colback=sblue,
+  colbacklower=white, 
+  frame hidden,
+  boxrule=0pt,
+  bicolor,
+  sharp corners,
+  borderline west={1pt}{0pt}{dblue},
+}{%
+  \def\blkihead{#1}
+  \def\blkitext{#2}
+  \textcolor{black}{%
+    \sffamily%
+    \ifx\blkihead\empty
+    \else
+      \textbf{{\color{dgreen}\blkihead}} \\%
+    \fi
+    {\color{black} \blkitext}%
+  }%
+}
+%
+\definecolor{dgreen}{RGB}{0,154,84}
+\definecolor{sgreen}{RGB}{238,247,244}
+\NewTotalTColorBox[]{\BlkHelp}{+m +m}{
+  notitle,
+  colback=sgreen,
+  colbacklower=white, 
+  frame hidden,
+  boxrule=0pt,
+  bicolor,
+  sharp corners,
+  borderline west={1pt}{0pt}{dgreen},
+}{%
+  \def\blkhhead{#1}
+  \def\blkhtext{#2}
+  \textcolor{black}{%
+    \sffamily%
+    \ifx\blkhhead\empty
+    \else
+      \textbf{{\color{dgreen}\blkhhead}} \\%
+    \fi
+    {\color{black} \blkhtext}%
+  }%
+}
+
+
+\newcommand{\case}[0]{$\star$ \xspace}
+\newcommand{\chk}[1]{\vspace{0.02in}\noindent$\square{}$~\textbf{#1}}
+
+\newcommand{\numpoint}[1]{%
+  \noindent\textcircled{\footnotesize\textbf{#1}}\xspace}
+
+% %% Custom frames for `boxing' texts, e.g., takeaways or summary.
+% \mdfdefinestyle{Takeaways}{%
+%     linecolor=white,
+%     outerlinewidth=0.1pt,
+%     roundcorner=5pt,
+%     innertopmargin=0.5em,
+%     innerbottommargin=0.5em,
+%     innerrightmargin=4pt,
+%     innerleftmargin=4pt,
+%     backgroundcolor=gray!8!white}
+
+%% Captions, by default, look a bit ugly. These macros adds a bit of
+%% emphasis to captions.
+%% Figure formatting.
+\newcommand{\figcap}[1]{\caption{\normalfont \textit{#1}}}
+\newcommand{\sfigcap}[1]{\caption{\normalfont \textit{\footnotesize #1}}}
+%% Table formatting.
+\newcommand{\tabcap}[1]{\caption{\textit{#1}}}
+\newcommand{\thead}[1]{\textbf{\textit{#1}}}
+\newcommand{\tshead}[1]{\textit{\footnotesize #1}}
+% \setlength{\tabcolsep}{4pt}
+
+%% Symbols for descriptive tables.
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand{\symok}[0]{{\color[HTML]{4DAF4A}{\cmark}}\xspace}
+\newcommand{\symfail}[0]{{\color[HTML]{A41A1C}{\xmark}}\xspace}
+\newcommand{\semichecked}{\cmark\!\!\!\raisebox{0.4 em}{\tiny\textbf{$\smallsetminus$}}}
+
+%% Formatting large numbers?
+%% Simply use `\num{123456789}'. Note the **absence of comma**.
+%%
+%% What about numbers with SI units?
+%%
+%% Ideally, there should be a *single space* between a number and the SI unit.
+%% Units cannot be in plural form.
+%% Units are not capitalized.
+%% Most people do not remember these rules, and it is, hence, better to define
+%% macros to make the task easier. The macros use commands from the `siunitx'
+%% package.
+\newcommand{\ums}[1]{\SI{#1}{\milli\second}}
+\newcommand{\us}[1]{\SI{#1}{\second}}
+\newcommand{\uus}[1]{\SI{#1}{\micro\second}}
+\newcommand{\uGB}[1]{\SI{#1}{\giga\byte}}
+\newcommand{\uGiB}[1]{\SI{#1}{\gibi\byte}}
+\newcommand{\uGHz}[1]{\SI{#1}{GHz}}
+\newcommand{\uKbps}[1]{\SI{#1}{Kbps}}
+\newcommand{\uGbps}[1]{\SI{#1}{Gbps}}
+\newcommand{\uMbps}[1]{\SI{#1}{Mbps}}
+\newcommand{\uKB}[1]{\SI{#1}{KB}}
+\newcommand{\uMB}[1]{\SI{#1}{\mega\byte}}
+
+%%
+%% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+%% ---( predefined constants for figure widths )---
+%%
+
+%% Width of figures in a one-column grid.
+\newlength{\onecolgrid}
+\setlength{\onecolgrid}{2.2in}
+%% Width of figures in a two-column grid.
+\newlength{\twocolgrid}
+\setlength{\twocolgrid}{0.4\textwidth}
+%% Width of figures in a three-column grid.
+\newlength{\threecolgrid}
+\setlength{\threecolgrid}{0.28\textwidth}
+%% Width of figures in a four-column grid.
+\newlength{\fourcolgrid}
+\setlength{\fourcolgrid}{0.24\textwidth}
+%% Width of figures in a two figures in one column.
+\newlength{\twoInOneColgrid}
+\setlength{\twoInOneColgrid}{0.23\textwidth}
+
+
+%% ---( Autoref labels )---
+%%
+%% When use you \autoref{...} it automatically generates
+%% a nice citation depending on what is being cited.
+%% Example: \autoref{fig:xyz} would, by default, generate “Figure 1”,
+%% with that entire text stylized as a link.
+%% If you want that autoref label to be changed, you can modify it below.
+%% Using this package ensures that even if multiple people edit the document,
+%% we end up with a consistent manner of referencing citations.
+\newcommand{\configautoref}{%
+    %% The `\@gobble` part removes the spacing
+    %% between the autoref label and number.
+    \makeatletter
+    \renewcommand*{\figureautorefname}{Fig.\,\@gobble}
+    \renewcommand*{\tableautorefname}{Tab.\,\@gobble}
+    \renewcommand*{\sectionautorefname}{\S\,\@gobble}
+    \renewcommand*{\subsectionautorefname}{\S\,\@gobble}
+    \makeatother
+}
+
+
+%%
+%% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+%% ---( reviewing macros )---
+%%
+
+\ifEditMode
+%% Turn on all editing macros.
+%%
+
+%% If you want to label the text with some markup indicating its type or state
+%% (e.g., text to be reviewed or completed), then uncomment the following.
+%%
+% \newcommand{\editlabel}[1]{\raisebox{.35ex}{\scriptsize \scshape[#1]}}
+%%
+%% If you only want to use colors to indicate text in various states,
+%% then uncomment the following.
+\newcommand{\editlabel}[1]{}
+
+%% Text to be reviewed (by senior authors).
+\newcommand{\REVIEW}[1]{%
+  \textcolor[HTML]{377eb8}{%
+    \editlabel{Review}\@#1}\xspace{}}
+%% Text to be reviewed across more than one paragraph (by senior authors).
+\newenvironment{REVIEWLONG}{%
+  \color[HTML]{377eb8}}{\ignorespacesafterend}
+%% Dummy text.
+\newenvironment{IGNORE}{%
+  \color[HTML]{6B6D6E}}{\ignorespacesafterend}
+
+%% Text to revisit.
+\newcommand{\REVISIT}[1]{%
+  \textcolor[HTML]{984ea3}{%
+    \editlabel{Revisit}\@#1}\xspace{}}
+
+%% Ideas to pursue.
+\newcommand{\PENDING}[1]{%
+  \textcolor[HTML]{e34a33}{%
+    $\cdots$\@\editlabel{Pending}\@\textit{#1} $\cdots$}\xspace{}}
+
+%% Things to do.
+\newcommand{\TODO}[1]{\textcolor[HTML]{e34a33}{#1}}
+\newcommand{\todo}[1]{\textcolor[HTML]{e34a33}{#1}}
+
+%% Issues to address.
+\newcommand{\FIXME}[1]{%
+  \textcolor[HTML]{c0392b}{\textit{\textbf{#1}}}}
+\newcommand{\MISSING}[1]{%
+  \textcolor[HTML]{de2d26}{\textbf{#1}}}
+
+%% Recommendation to remove.
+\newcommand{\REMOVE}[1]{
+  {\small \textcolor{a65628}{#1\\--- Consider deleting.}}}
+
+%% Feedback with comments.
+%% Three parts: [...text to be edited/replaced...][replacement][comment or explanation]
+%% (All three parts are optional.)
+%
+\newcommand{\FB}[3]{%
+    \def\textorig{#1}
+    \def\textrepl{#2}
+    \def\textnote{#3}
+    \ifx\textorig\empty
+        %% Nothing to do.
+    \else
+        \textcolor[HTML]{E0E0E0}{[\sout{\textorig}]}%
+    \fi
+    \ifx\textrepl\empty
+        %% Nothing to do.
+    \else
+        \textcolor[HTML]{377eb8}{[\textrepl]}%
+    \fi
+    \ifx\textnote\empty
+        %% Nothing to do.
+    \else
+        \textcolor[HTML]{2E7D32}{[\textit{\textnote}]}
+    \fi}
+\newcommand{\COMMENT}[1]{\FB{}{}{#1}}
+
+\else
+%% Turn off all editing macros.
+%%
+
+%% Text marked in `REVIEW' and `REVISIT' **will** be included, but the coloring
+%% or special markup will be removed.
+\newcommand{\REVIEW}[1]{#1}
+\newcommand{\REVISIT}[1]{#1}
+
+\newenvironment{REVIEWLONG}{}{}
+
+\newcommand{\PENDING}[1]{}
+\newcommand{\TODO}[1]{}
+\newcommand{\FIXME}[1]{}
+\newcommand{\MISSING}[1]{}
+\newcommand{\REMOVE}[1]{}
+\newenvironment{IGNORE}{}{}
+
+%% Feedback with comments.
+%% Remove the contents of the first bracket, retain the second, and ignore the third.
+\newcommand{\FB}[3]{#2}
+\newcommand{\COMMENT}[1]{}
+
+\fi
+
+%%
+%% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+%% ---( draft customizations )---
+%% 
+
+\settopmatter{printfolios=true,printccs=false,printacmref=false}
+
+% \acmConference[CoNEXT '23]{18th International Conference on emerging Networking
+%   EXperiments}{December 5-8,2022}{Paris, France}
+% \acmYear{2023}
+% \setcopyright{rightsretained}
+%% Disable / remove copyright boxes
+% \renewcommand\footnotetextcopyrightpermission[1]{}
+% \copyrightyear{2023}
+% \acmBooktitle{18th International Conference on emerging Networking
+%   EXperiments (CoNEXT 2023), December 5-8, 2022, Paris, France}
+% \acmDOI{}
+% \acmISBN{}
+
+%% Graphics Path to find your figures and illustrations.
+\graphicspath{{./figs/}}
+
+% % Page geometry and numbering.
+% \setlength\paperheight {11in}
+% \setlength\paperwidth {8.5in}
+% \setlength{\textwidth}{7in}
+% \setlength{\textheight}{9.25in}
+% \setlength{\oddsidemargin}{-.25in}
+% \setlength{\evensidemargin}{-.25in}
+% %
+% \pagenumbering{arabic}
+
+
+%% ---( workarounds )---
+%%
+
+% \usepackage{etoolbox}
+%\makeatletter
+%\patchcmd\@combinedblfloats{\box\@outputbox}{\unvbox\@outputbox}{}{\errmessage{\noexpand patch failed}}
+%\makeatother
+
+% pdfTeX error (ext4):
+% \pdfendlink ended up in different nesting level than \pdfstartlink.
+%
+% “Sometimes, the links are created by the bibliography, from items with URL
+% fields. A solution that helps in this case and preserves clickable links is to
+% make sure that each \bibitem is typeset without column or page breaks:”
+% (https://tex.stackexchange.com/questions/1522/pdfendlink-ended-up-in-different-nesting-level-than-pdfstartlink)
+%
+% \let\oldbibitem\bibitem
+% \def\bibitem{\vfill\oldbibitem}
+
+% % Workaround for 8pt references font issue
+% \renewcommand*{\bibfont}{\smaller}
+
+%% Suppress empty bibliography warnings.
+\makeatletter
+\def\blx@warn@bibempty{}
+\makeatother
+
+%% Do not complain about missing `city' and `country' information for author
+%% affiliations.
+%% (https://tex.stackexchange.com/questions/655620/how-to-make-acmart-stop-complaining-about-missing-country-in-affiliation)
+\makeatletter
+\def\@ACM@checkaffil{% Only warnings
+    \if@ACM@instpresent\else
+    \ClassWarningNoLine{\@classname}{No institution present for an affiliation}%
+    \fi
+    \if@ACM@citypresent\else
+    \ClassWarningNoLine{\@classname}{No city present for an affiliation}%
+    \fi
+    \if@ACM@countrypresent\else
+        \ClassWarningNoLine{\@classname}{No country present for an affiliation}%
+    \fi
+}
+%% Shrink author name font size to avoid author names from wrapping around.
+%% (https://tex.stackexchange.com/questions/558381/how-to-change-spacing-in-the-acm-conference-template)
+\def\@authorfont{\normalfont\Large} %change font. don't do this.
+\def\@affiliationfont{\normalfont\small} %change font. don't do this.
+% \def\author@bx@sep{1pc}
+\makeatother
+
+%%
+%% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "thesis"
+%%% End:

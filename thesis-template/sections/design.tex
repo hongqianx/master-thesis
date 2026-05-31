@@ -17,6 +17,19 @@ All task variants use the same training and test sets. We evaluate both predicti
 
 The key objective is not only to determine whether stronger hints improve predictive performance, but also to understand how the agent's feature engineering strategy changes. An agent is considered to exhibit poor feature engineering if it fails to construct domain-relevant features, such as torque or balance-difference features, in the No-Hint or Weak-Hint settings, despite their strong relevance to the underlying physical mechanism of the task. A large increase in performance and the appearance of torque-related features only after stronger hints are provided indicate that the agent relies heavily on external guidance to discover domain knowledge. Conversely, if the agent independently constructs these features and achieves strong performance without explicit hints, it demonstrates successful domain-aware feature engineering.
 
+\subsection{llm as judge}\label{llm judge}
+To systematically evaluate the behavior of LLM-generated data science pipelines, we developed an automated LLM-as-a-judge framework. Rather than relying solely on final prediction metrics, this approach inspects the generated Python code directly, enabling fine-grained analysis of *how* a model solved a problem—not just *whether* it succeeded.
+
+Evaluation dimensions are defined in a per-workload JSON configuration file, allowing the framework to be extended to new tasks without modifying the judge code. Each criterion specifies a natural-language question and a JSON Schema type for the expected answer.
+
+To ensure machine-readable output, the judge invokes GPT-4o with a forced function call (`tool\_choice: {"type": "function", "function": {"name": "record\_analysis"}}`). The function schema is generated dynamically from the criteria configuration, mapping each criterion key to its declared JSON Schema type. This guarantees that every response is a valid, parseable JSON object conforming to the schema—eliminating the need to parse free-form text.
+
+The judge is instructed via a system prompt to reason only from what is explicitly visible in the code and output, avoiding inference beyond observable evidence:
+
+> *"Base your answers only on what is explicitly visible in the code and output — do not infer or assume anything not directly observable."*
+
+Results are written to a CSV file with one row per evaluated task. Each row contains the task identifier, all criterion values, and token usage statistics. This structured format enables downstream aggregation and statistical analysis across multiple tasks and experimental conditions.
+
 
 %%% Local Variables:
 %%% mode: latex

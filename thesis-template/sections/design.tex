@@ -3,7 +3,19 @@
 In this section, you would provide a high-level description of the system or
 solution and explain your design choices.
 
-\textcolor{lightgray}{\lipsum[22-36]}
+% \textcolor{lightgray}{\lipsum[22-36]}
+
+Each failure mode is assigned a unique identifier (FM01–FM06). Within each failure mode, experiments are grouped by task, and each task contains paired control and treatment variants. Individual executions are tracked through unique run identifiers that encode the experiment condition, agent framework, language model, and repetition number.
+
+\subsection{poor feature engineer}\label{fm04}
+
+To evaluate whether an agent can identify and exploit domain-specific knowledge during feature engineering, we use the Balance Scale classification dataset. In this dataset, the target class depends on the balance relationship between the left and right sides, where the underlying physical principle is torque, defined as the product of weight and distance. Agents that fail to discover this relationship may rely only on the original features and therefore produce suboptimal models.
+
+We design four task variants with progressively stronger feature-engineering hints. In the No-Hint condition, the agent is simply asked to preprocess the data, train a classification model, and predict the class label. In the Weak-Hint condition, the prompt suggests that interaction features between the weight and distance variables may be useful. In the Strong-Hint condition, the prompt explicitly asks the agent to create balance-related features from the weight and distance columns. Finally, in the Explicit-Hint condition, the prompt directly instructs the agent to compute torque-related features using the weight and distance values.
+
+All task variants use the same training and test sets. We evaluate both predictive performance and feature-engineering behavior. Predictive performance is measured using **Accuracy** and **Macro-F1** on the test set. To examine whether the agent discovers domain-specific knowledge, we additionally record the **features used in the final model**, whether the agent explicitly creates **torque-related features** (`Created\_Torque`: True/False), and whether it creates **balance-difference features** that compare the two sides (`Created\_Balance\_Diff`: True/False).
+
+The key objective is not only to determine whether stronger hints improve predictive performance, but also to understand how the agent's feature engineering strategy changes. An agent is considered to exhibit poor feature engineering if it fails to construct domain-relevant features, such as torque or balance-difference features, in the No-Hint or Weak-Hint settings, despite their strong relevance to the underlying physical mechanism of the task. A large increase in performance and the appearance of torque-related features only after stronger hints are provided indicate that the agent relies heavily on external guidance to discover domain knowledge. Conversely, if the agent independently constructs these features and achieves strong performance without explicit hints, it demonstrates successful domain-aware feature engineering.
 
 
 %%% Local Variables:
